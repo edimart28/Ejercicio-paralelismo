@@ -1,1 +1,28 @@
+name: paralelismo
 
+on:
+  workflow_dispatch:
+      inputs:
+        valor1:
+           description: 'primer valor'
+           required: true
+           type: string
+        valor2:
+          description: 'primer valor'
+          required: true
+          type: string
+              
+jobs:
+  calcular-operadores:
+      strategy:
+          matrix:
+            key1:  [valor1]
+            key2:  [valor1]
+      steps:
+         name: operacion
+         run:  |
+             echo "${{ matrix.key1 }} - ${{ matrix.key2 }}"
+             echo "${{ matrix.key1 }} + ${{ matrix.key2 }}"
+             echo "${{ matrix.key1 }} * ${{ matrix.key2 }}"
+             echo "${{ matrix.key1 }} / ${{ matrix.key2 }}"
+    
