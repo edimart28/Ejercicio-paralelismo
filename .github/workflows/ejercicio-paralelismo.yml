@@ -2,27 +2,42 @@ name: paralelismo
 
 on:
   workflow_dispatch:
-      inputs:
-        valor1:
-           description: 'primer valor'
-           required: true
-           type: int
-        valor2:
-          description: 'segundo valor'
-          required: true
-          type: int
-              
+    inputs:
+      valor1:
+        description: 'primer valor'
+        required: true
+        type: string
+      valor2:
+        description: 'segundo valor'
+        required: true
+        type: string
+
 jobs:
-  calcular-operadores:
-      strategy:
-          matrix:
-            key1:  [valor1]
-            key2:  [valor1]
-      steps:
-         name: operacion
-         run:  |
-             echo "${{ matrix.key1 }} - ${{ matrix.key2 }}"
-             echo "${{ matrix.key1 }} + ${{ matrix.key2 }}"
-             echo "${{ matrix.key1 }} * ${{ matrix.key2 }}"
-             echo "${{ matrix.key1 }} / ${{ matrix.key2 }}"
-    
+  calcular-operaciones:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        operacion: [suma, resta, multiplicacion, division]
+    steps:
+      - name: Ejecutar operación ${{ matrix.operacion }}
+        run: |
+          a=${{ inputs.valor1 }}
+          b=${{ inputs.valor2 }}
+          case "${{ matrix.operacion }}" in
+            suma)
+              echo "Resultado de $a + $b = $((a + b))"
+              ;;
+            resta)
+              echo "Resultado de $a - $b = $((a - b))"
+              ;;
+            multiplicacion)
+              echo "Resultado de $a * $b = $((a * b))"
+              ;;
+            division)
+              if [ "$b" -eq 0 ]; then
+                echo "Error: División por cero"
+              else
+                echo "Resultado de $a / $b = $((a / b))"
+              fi
+              ;;
+          esac
