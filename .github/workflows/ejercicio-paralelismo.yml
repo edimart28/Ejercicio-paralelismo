@@ -8,7 +8,7 @@ on:
            required: true
            type: string
         valor2:
-          description: 'primer valor'
+          description: 'segundo valor'
           required: true
           type: string
               
