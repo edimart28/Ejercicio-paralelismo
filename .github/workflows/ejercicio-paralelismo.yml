@@ -6,11 +6,11 @@ on:
         valor1:
            description: 'primer valor'
            required: true
-           type: string
+           type: int
         valor2:
           description: 'segundo valor'
           required: true
-          type: string
+          type: int
               
 jobs:
   calcular-operadores:
